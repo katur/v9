@@ -1,3 +1,6 @@
+from util import combine_dictionaries, identity, indent
+
+
 V9_MAPPING = (
     ('abc', 2),
     ('def', 3),
@@ -10,10 +13,6 @@ V9_MAPPING = (
 )
 
 
-def combine_dictionaries(a, b):
-    return dict(a.items() + b.items())
-
-
 LETTER_TO_NUM = reduce(
     combine_dictionaries,
     ({letter: num for letter in letters} for letters, num in V9_MAPPING)
@@ -22,10 +21,6 @@ LETTER_TO_NUM = reduce(
 
 def v9_mapping(letter):
     return LETTER_TO_NUM(letter)
-
-
-def identity(letter):
-    return letter
 
 
 class Trie():
@@ -51,7 +46,7 @@ class Trie():
 
             node = node.children[mapped]
 
-        node.words.add(word)
+        node.items.add(word)
 
     def print_subtree(self):
         self.root.print_subtree(0)
@@ -62,13 +57,13 @@ class Node():
     def __init__(self, key=None):
         self.key = key
         self.children = {}
-        self.words = set()
+        self.items = set()
 
     def __str__(self):
         s = 'Node:{}'.format(self.key)
 
-        if self.words:
-            s += ' ({})'.format(','.join(self.words))
+        if self.items:
+            s += ' ({})'.format(','.join(self.items))
 
         return s
 
@@ -78,12 +73,8 @@ class Node():
     def print_subtree(self, indent_level):
         print indent(self, indent_level)
 
-        for letter, node in self.children.iteritems():
+        for key, node in self.children.iteritems():
             node.print_subtree(indent_level + 1)
-
-
-def indent(s, indent_level):
-    return '{}{}'.format('\t' * indent_level, s)
 
 
 if __name__ == '__main__':
