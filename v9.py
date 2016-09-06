@@ -1,4 +1,4 @@
-T9_MAPPING = (
+V9_MAPPING = (
     ('abc', 2),
     ('def', 3),
     ('ghi', 4),
@@ -10,9 +10,28 @@ T9_MAPPING = (
 )
 
 
+def combine_dictionaries(a, b):
+    return dict(a.items() + b.items())
+
+
+LETTER_TO_NUM = reduce(
+    combine_dictionaries,
+    ({letter: num for letter in letters} for letters, num in V9_MAPPING)
+)
+
+
+def letter_to_num(letter):
+    return LETTER_TO_NUM(letter)
+
+
+def letter_to_self(letter):
+    return letter
+
+
 class Trie():
 
-    def __init__(self):
+    def __init__(self, mapping=letter_to_self):
+        self.mapping = mapping
         self.root = Node()
 
     def __str__(self):
@@ -25,10 +44,12 @@ class Trie():
         node = self.root
 
         for letter in word:
-            if letter not in node.children:
-                node.children[letter] = Node(letter)
+            mapped = self.mapping[letter]
 
-            node = node.children[letter]
+            if mapped not in node.children:
+                node.children[mapped] = Node(mapped)
+
+            node = node.children[mapped]
 
         node.words.add(word)
 
@@ -38,15 +59,15 @@ class Trie():
 
 class Node():
 
-    def __init__(self, letter=None):
-        self.letter = letter
+    def __init__(self, key=None):
+        self.key = key
         self.children = {}
         self.words = set()
 
     def __str__(self):
-        s = 'Node letter:{}'.format(self.letter)
+        s = 'Node:{}'.format(self.key)
         if self.words:
-            s += ' words: {}'.format(self.words)
+            s += ' ({})'.format(','.join(self.words))
         return s
 
     def __repr__(self):
@@ -59,25 +80,12 @@ class Node():
             node.print_subtree(indent + 1)
 
 
-def get_letter_to_num_dictionary():
-    return reduce(
-        combine_dictionaries,
-        ({letter: num for letter in letters} for letters, num in T9_MAPPING)
-    )
-
-
-def combine_dictionaries(a, b):
-    return dict(a.items() + b.items())
-
-
 def indent_string(s, indent_level):
     return '{}{}'.format('t' * indent_level, s)
 
 
 if __name__ == '__main__':
-    letter_to_num = get_letter_to_num_dictionary()
-
-    trie = Trie()
+    trie = Trie(mapping=LETTER_TO_NUM)
     trie.insert('hi')
     trie.insert('bye')
     trie.print_subtree()
