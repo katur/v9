@@ -20,17 +20,17 @@ LETTER_TO_NUM = reduce(
 )
 
 
-def letter_to_num(letter):
+def v9_mapping(letter):
     return LETTER_TO_NUM(letter)
 
 
-def letter_to_self(letter):
+def identity(letter):
     return letter
 
 
 class Trie():
 
-    def __init__(self, mapping=letter_to_self):
+    def __init__(self, mapping=identity):
         self.mapping = mapping
         self.root = Node()
 
@@ -66,22 +66,24 @@ class Node():
 
     def __str__(self):
         s = 'Node:{}'.format(self.key)
+
         if self.words:
             s += ' ({})'.format(','.join(self.words))
+
         return s
 
     def __repr__(self):
         return str(self)
 
-    def print_subtree(self, indent):
-        print '{}{}'.format('\t' * indent, self)
+    def print_subtree(self, indent_level):
+        print indent(self, indent_level)
 
         for letter, node in self.children.iteritems():
-            node.print_subtree(indent + 1)
+            node.print_subtree(indent_level + 1)
 
 
-def indent_string(s, indent_level):
-    return '{}{}'.format('t' * indent_level, s)
+def indent(s, indent_level):
+    return '{}{}'.format('\t' * indent_level, s)
 
 
 if __name__ == '__main__':
