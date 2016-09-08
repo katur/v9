@@ -3,6 +3,7 @@ from trie import Trie
 
 
 V9_SPEC = (
+    ('-', 1),
     ('abc', 2),
     ('def', 3),
     ('ghi', 4),
@@ -22,9 +23,11 @@ V9_LETTER_TO_NUM = reduce(
 
 if __name__ == '__main__':
     trie = Trie(mapping=lambda x: V9_LETTER_TO_NUM[x])
-    trie.insert('hi')
-    trie.insert('bye')
-    trie.print_subtree()
 
-    with open('/usr/share/dict/words'):
-        pass
+    with open('/usr/share/dict/words', 'r') as f:
+        for line in f:
+            trie.insert(line.lower().strip())
+
+    print trie.get_words('43556')
+    print trie.get_words('222783')
+    print trie.get_words('8378464')

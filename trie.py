@@ -26,8 +26,25 @@ class Trie():
 
         node.words.add(word)
 
-    def print_subtree(self):
-        self.root.print_subtree(0)
+    def get_words(self, key_seq):
+        node = self.root
+
+        for key in key_seq:
+            try:
+                key = int(key)
+            except ValueError:
+                raise ValueError('{} is not an int (key_seq must be '
+                                 'comprised of ints)'.format(key))
+
+            if key not in node.children:
+                return None
+
+            node = node.children[key]
+
+        return node.words
+
+    def print_trie(self):
+        self.root.print_subtrie(0)
 
 
 class Node():
@@ -48,8 +65,8 @@ class Node():
     def __repr__(self):
         return str(self)
 
-    def print_subtree(self, indent_level):
+    def print_subtrie(self, indent_level):
         print indent(self, indent_level)
 
         for key, node in self.children.iteritems():
-            node.print_subtree(indent_level + 1)
+            node.print_subtrie(indent_level + 1)
