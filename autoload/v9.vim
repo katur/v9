@@ -1,11 +1,14 @@
+" Exit if this vim is not compatible with python
 if !has('python')
   finish
 endif
 
-if !exists('loaded_v9_py')
+
+" Initialize V9
+if !exists('g:initialized_V9')
   let s:plugin_path = escape(expand('<sfile>:p:h'), '\')
   exe 'pyfile ' . s:plugin_path . '/v9.py'
-  let g:loaded_v9_py = 1
+  let g:initialized_V9 = 1
 endif
 
 
