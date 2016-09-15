@@ -4,7 +4,7 @@ endif
 
 pyfile v9.py
 
-function! DoV9(digits)
+function! V9(digits)
 python << endpython
 
 import vim
