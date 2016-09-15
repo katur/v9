@@ -2,7 +2,8 @@ if !has('python')
   finish
 endif
 
-pyfile v9.py
+let s:plugin_path = escape(expand('<sfile>:p:h'), '\')
+exe 'pyfile ' . s:plugin_path . '/v9.py'
 
 function! V9(digits)
 python << endpython
