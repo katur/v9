@@ -1,6 +1,8 @@
 print 'Loading...'
 
 
+CORPUS = '/usr/share/dict/words'
+
 V9_SPEC = (
     ('-', 1),
     ('abc', 2),
@@ -23,7 +25,7 @@ V9_LETTER_TO_NUM = reduce(
 def get_v9_trie():
     trie = Trie(mapping=lambda x: V9_LETTER_TO_NUM[x])
 
-    with open('/usr/share/dict/words', 'r') as f:
+    with open(CORPUS, 'r') as f:
         for line in f:
             trie.insert(line.lower().strip())
 
