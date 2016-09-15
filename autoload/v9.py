@@ -1,3 +1,6 @@
+print 'Loading...'
+
+
 V9_SPEC = (
     ('-', 1),
     ('abc', 2),
@@ -100,6 +103,9 @@ class Node():
 
 if __name__ == '__main__':
     trie = get_v9_trie()
-    print trie.get_words('43556')
-    print trie.get_words('222783')
-    print trie.get_words('8378464')
+    # print trie.get_words('43556')
+    # print trie.get_words('222783')
+    # print trie.get_words('8378464')
+
+
+print 'Done loading'
