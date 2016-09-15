@@ -2,10 +2,14 @@ if !has('python')
   finish
 endif
 
-let s:plugin_path = escape(expand('<sfile>:p:h'), '\')
-exe 'pyfile ' . s:plugin_path . '/v9.py'
+if !exists('loaded_v9_py')
+  let s:plugin_path = escape(expand('<sfile>:p:h'), '\')
+  exe 'pyfile ' . s:plugin_path . '/v9.py'
+  let g:loaded_v9_py = 1
+endif
 
-function! V9(digits)
+
+function! v9#V9(digits)
 python << endpython
 
 import vim
