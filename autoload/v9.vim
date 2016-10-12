@@ -12,6 +12,8 @@ if !exists('g:initialized_V9')
 endif
 
 
+" Do V9 algorithm on string of digits. To run in normal mode -
+" :call v9#V9('222783')
 function! v9#V9(digits)
 python << endpython
 
