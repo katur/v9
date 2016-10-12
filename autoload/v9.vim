@@ -22,3 +22,32 @@ print trie.get_words(vim.eval('a:digits'))
 
 endpython
 endfunction
+
+
+let g:fakemo = 'Bla'
+
+function! v9#GetMonth(findstart, base)
+	if a:findstart
+		" locate the start of the word
+		let line = getline('.')
+		let start = col('.') - 1
+		while start > 0 && line[start - 1] =~ '\a'
+			let start -= 1
+		endwhile
+		return start
+	else
+		echo a:base
+
+		" Find months matching a:base
+		let res = []
+		for m in split(g:fakemo . " Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec")
+			if m =~ '^' . a:base
+				call add(res, m)
+			endif
+		endfor
+		return res
+	endif
+endfunction
+
+" :set completefunc
+set completefunc=v9#GetMonth
